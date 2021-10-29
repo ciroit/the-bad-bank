@@ -1,18 +1,53 @@
 import react from 'react'
 import {useLocation} from 'react-router-dom'
+import {UserContext} from '../Shared/Context'
 
 function NavBar(){
 
-    const [navBarcolor, setNavBarcolor] = react.useState('dark');
 
-    const [bgColor, setBgColor] = react.useState('success');
+    const ctx = react.useContext(UserContext);
+
+    const [value, setValue] = react.useState(null);
 
     var location = useLocation();
 
-    const convertTo = (newNbColor, newBgColor) => {
+    
+    console.log("Rendering NavBar", ctx);
 
-        setNavBarcolor(newNbColor);
-        setBgColor(newBgColor);
+    const convertTo = (theme) => {
+
+
+        let bgColor, textColor, navBarColor;
+
+        if(theme == "dark"){
+
+            bgColor = 'dark';
+            navBarColor = 'dark';
+            textColor = 'white';
+
+        }else if(theme == 'success'){
+            
+            bgColor = 'success';
+            navBarColor = 'dark';
+            textColor = 'white';
+
+        }else if(theme == 'primary'){
+            
+            bgColor = 'primary';
+            navBarColor = 'dark';
+            textColor = 'white';
+
+        }else if(theme == 'light'){
+            
+            bgColor = 'light';
+            navBarColor = 'light';
+            textColor = 'black';
+
+        }
+
+        ctx.theme = {bgColor, navBarColor, textColor};
+
+        setValue(Date.now());
 
     }
 
@@ -26,7 +61,7 @@ function NavBar(){
     var allDataLinkClassName = location.pathname == '/allData/' ? 'nav-link active' : 'nav-link';
 
     return (
-        <nav className={`navbar navbar-expand-lg navbar-${navBarcolor} bg-${bgColor}`} >
+        <nav className={`navbar navbar-expand-lg navbar-${ctx.theme.navBarColor} bg-${ctx.theme.bgColor}`} >
             <div className="container-fluid">
             <a className="navbar-brand" href="#">BadBank</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,14 +88,14 @@ function NavBar(){
                         <a className={allDataLinkClassName} aria-current="page"  href="#/alldata/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="See All Data!">All Data</a>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle dropdown-menu-right" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Select NavBar Color
+                        <a className="nav-link dropdown-toggle dropdown-menu-right" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Change page for see the new theme!">
+                            Select Theme
                         </a>
                         <ul className="dropdown-menu " aria-labelledby="navbarDropdown">
-                            <li><a className="dropdown-item" onClick = { () => {  convertTo("dark", "dark"); } }>Dark</a></li>
-                            <li><a className="dropdown-item" onClick = { () => {  convertTo("dark", "success"); } }>Success</a></li>
-                            <li><a className="dropdown-item" onClick = { () => {  convertTo("dark", "primary"); } }>Success</a></li>  
-                            <li><a className="dropdown-item" onClick = { () => {  convertTo("light", "light"); } }>Light</a></li>
+                            <li><a className="dropdown-item" href='#' onClick = { () => {  convertTo("dark"); } }>Dark</a></li>
+                            <li><a className="dropdown-item" href='#' onClick = { () => {  convertTo("success"); } }>Success</a></li>
+                            <li><a className="dropdown-item" href='#' onClick = { () => {  convertTo("primary"); } }>Primary</a></li>  
+                            <li><a className="dropdown-item" href='#' onClick = { () => {  convertTo("light"); } }>Light</a></li>
                             
                         </ul>
                     </li>

@@ -1,13 +1,15 @@
 
-import React from 'react';
+import react from 'react';
 
-const UserContext = React.createContext(null);
+const UserContext = react.createContext(null);
 
 function Card(props){
+    
+    const ctx = react.useContext(UserContext);
 
     function classes(){
-        const bg = props.bgColor ? 'bg-' + props.bgColor : '';
-        const txt = props.txtColor ? 'text-' + props.txtColor : ' text-white' ;
+        const bg = 'bg-' + ctx.theme.bgColor;
+        const txt = 'text-' + ctx.theme.textColor ;
 
         return `card mb-3 ${bg} ${txt}`;
     }

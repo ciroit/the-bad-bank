@@ -17,13 +17,16 @@ import {UserContext} from './Shared/Context';
 function App() {
 
   const usersInit = {users : [{name:'Abel', email : 'abel@mit.edu', balance : 3000}], 
-                     history : []};
+                     history : [],
+                     theme : {bgColor:'success', navBarColor: 'dark', textColor : 'white'}
+                    };
 
   return (
     <HashRouter>
+      <UserContext.Provider value={usersInit}>
       <NavBar />
       <hr />
-      <UserContext.Provider value={usersInit}>
+      
         <div style = {{paddingLeft: '30px', paddingTop: '20px'}}>
         <Route path='/' exact component={Home} />
         <Route path='/createaccount' component={CreateAccount} />
