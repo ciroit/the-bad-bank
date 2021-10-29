@@ -36,6 +36,14 @@ function WithDraw(){
         return  error;
     }
 
+    const showSuccessMessage = (message) => {
+
+        var alertPlaceholder = document.getElementById('divMessage')
+
+        alertPlaceholder.innerHTML = '<div class="alert alert-success alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+    }
+
     const handleSubmit = (value, {resetForm})=>{
         
         var amount = parseFloat(value.amount);
@@ -45,6 +53,8 @@ function WithDraw(){
         ctx.history.push({name:ctx.users[0].name, operation : 'Withdraw', amount});
 
         resetForm();
+        
+        showSuccessMessage("Success!");
 
     }
 
@@ -54,30 +64,35 @@ function WithDraw(){
             bgColor = 'primary'
             header = 'Withdraw'
             body = {(
-                <Formik
-                    initialValues={{amount:0}}
-                    onSubmit = {handleSubmit}
-                >
-                    
-                    {props => (
+                <>
+                    <Formik
+                        initialValues={{amount:''}}
+                        onSubmit = {handleSubmit}
+                    >
+                        
+                        {props => (
 
-                        <Form>
-                            Balance :
-                            <br/>
-                            <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
-                            <br/>
-                            Amount :
-                            <br/>
-                            <Field className='form-control' type='text' name='amount' placeholder='Enter amount' validate={validateAmount} />
-                            <ErrorMessage name="amount" />
-                            <br/>
-                            <button type="submit" className="btn btn-light" disabled={!(props.isValid && props.dirty)} >Withdraw</button>
-                                
-                        </Form>
+                            <Form>
+                                Balance :
+                                <br/>
+                                <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
+                                <br/>
+                                Amount :
+                                <br/>
+                                <Field className='form-control' type='text' name='amount' placeholder='Enter amount' validate={validateAmount} />                            
+                                {props.errors.amount ? <div>{props.errors.amount}</div> : null}
+                                <br/>
+                                <button type="submit" className="btn btn-light" disabled={!(props.isValid && props.dirty)} >Withdraw</button>
+                                    
+                            </Form>
 
-                    )}
+                        )}
 
-                </Formik>
+                    </Formik>
+                    <br/>
+                    <div id="divMessage">
+                    </div>
+                </>
             )}
         />
 

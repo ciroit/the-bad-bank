@@ -31,6 +31,14 @@ function Deposit(){
         return  error;
     }
 
+    const showSuccessMessage = (message) => {
+
+        var alertPlaceholder = document.getElementById('divMessage')
+
+        alertPlaceholder.innerHTML = '<div class="alert alert-success alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+    }
+
     const handleSubmit = (value, {resetForm})=>{
         
         var amount = parseFloat(value.amount);
@@ -41,6 +49,8 @@ function Deposit(){
 
         resetForm();
 
+        showSuccessMessage("Success!");
+
     }
 
     return (
@@ -49,30 +59,35 @@ function Deposit(){
             bgColor = 'primary'
             header = 'Deposit'
             body = {(
-                <Formik
-                    initialValues={{amount:0}}
-                    onSubmit = {handleSubmit}
-                >
+                <>
+                    <Formik
+                        initialValues={{amount:''}}
+                        onSubmit = {handleSubmit}
+                    >
+                        
+                        {props => (
+                            
+                            <Form>
+                                Balance :
+                                <br/>
+                                <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
+                                <br/>
+                                Amount :
+                                <br/>
+                                <Field className='form-control' type='text' name='amount' placeholder='Enter amount' validate={validateAmount} />                            
+                                {props.errors.amount ? <div>{props.errors.amount}</div> : null}
+                                <br/>
+                                <button type="submit" className="btn btn-light" disabled={!(props.isValid && props.dirty)} >Deposit</button>
+                                    
+                            </Form>
+
+                        )}
                     
-                    {props => (
-
-                        <Form>
-                            Balance :
-                            <br/>
-                            <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
-                            <br/>
-                            Amount :
-                            <br/>
-                            <Field className='form-control' type='text' name='amount' placeholder='Enter amount' validate={validateAmount} />
-                            <ErrorMessage name="amount" />
-                            <br/>
-                            <button type="submit" className="btn btn-light" disabled={!(props.isValid && props.dirty)} >Deposit</button>
-                                
-                        </Form>
-
-                    )}
-
-                </Formik>
+                    </Formik>
+                    <br/>
+                    <div id="divMessage">
+                    </div>
+                </>
             )}
         />
 
