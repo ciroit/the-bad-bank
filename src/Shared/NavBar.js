@@ -51,14 +51,23 @@ function NavBar(){
 
     }
 
+    const logout = () => {
+
+      ctx.userSession = null;
+
+      window.location.href = '#/login';
+
+      setValue(Date.now());
+
+    }
+
     console.log(location);
 
     var createAccountLinkClassName = location.pathname == '/createaccount/' ? 'nav-link active' : 'nav-link';
     var loginLinkClassName = location.pathname == '/login/' ? 'nav-link active' : 'nav-link';
     var depositLinkClassName = location.pathname == '/deposit/' ? 'nav-link active' : 'nav-link';
     var withDrawLinkClassName = location.pathname == '/withdraw/' ? 'nav-link active' : 'nav-link';
-    var balanceLinkClassName = location.pathname == '/balance/' ? 'nav-link active' : 'nav-link';
-    var allDataLinkClassName = location.pathname == '/allData/' ? 'nav-link active' : 'nav-link';
+    var allDataLinkClassName = location.pathname == '/alldata/' ? 'nav-link active' : 'nav-link';
 
     return (
         <nav className={`navbar navbar-expand-lg navbar-${ctx.theme.navBarColor} bg-${ctx.theme.bgColor}`} >
@@ -69,24 +78,33 @@ function NavBar(){
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                        <a className={createAccountLinkClassName} aria-current="page"  href="#/createaccount/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create a new Account!">Create Account</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={loginLinkClassName} aria-current="page"  href="#/login/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login!">Login</a>
-                    </li>
-                    <li className="nav-item">
+
+                  {ctx.userSession ? (
+                    <>
+                      <li className="nav-item">
                         <a className={depositLinkClassName} aria-current="page"  href="#/deposit/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make a Deposit!">Deposit</a>
-                    </li>
-                    <li className="nav-item">
+                      </li>
+                      <li className="nav-item">
                         <a className={withDrawLinkClassName} aria-current="page"  href="#/withdraw/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make a Withdraw!">Withdraw</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={balanceLinkClassName} aria-current="page"  href="#/balance/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="See your balance!">Balance</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className={allDataLinkClassName} aria-current="page"  href="#/alldata/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="See All Data!">All Data</a>
-                    </li>
+                      </li>
+                    </>
+
+                  ) : (
+
+                    <>
+                      <li className="nav-item">
+                        <a className={loginLinkClassName} aria-current="page"  href="#/login/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login!">Login</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={createAccountLinkClassName} aria-current="page"  href="#/createaccount/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create a new Account!">Create Account</a>
+                      </li>  
+                      <li className="nav-item">
+                        <a className={allDataLinkClassName} aria-current="page"  href="#/alldata/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="See All Data!!(Only for admin users)">All Data</a>
+                      </li>       
+                    </>
+
+                  )}       
+                    
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle dropdown-menu-right" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Change page for see the new theme!">
                             Select Theme
@@ -100,6 +118,11 @@ function NavBar(){
                         </ul>
                     </li>
                 </ul>
+                <span className="navbar-text">
+
+                  {ctx.userSession ? ( <>{"Hi " + ctx.userSession.name} &nbsp; <button className='btn btn-light' onClick={logout} >Logout</button></> ) : null}
+                   
+                </span>
             </div>
             </div>
         </nav>

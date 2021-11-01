@@ -10,12 +10,12 @@ function AllData(){
     return (
 
         <>
-            <div class="card mb-6 text-center">
-                <div class="card-header">
-                    Accounts
+            <div className="card mb-6 text-center">
+                <div className="card-header">
+                    <h3>Accounts</h3>
                 </div>
-                <div class="card-body">
-                    <table class="table table-striped">
+                <div className="card-body">
+                    <table className="table table-striped">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -24,33 +24,36 @@ function AllData(){
                             </tr>
                         </thead>
                         <tbody>
-                            {ctx.users.map(user => {
-                                return (<tr>
+                            {ctx.users.map((user,index) => {
+                                return (
+                                <tr key={"u"+index}>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.balance}</td>
-                                </tr>);
+                                </tr>
+                                );
                             })}
                         </tbody>
                     </table>
                 </div>
             </div>
             <br/>
-            <div class="card text-center">
-                <div class="card-header">
-                    History
+            <div className="card text-center">
+                <div className="card-header">
+                    <h3>History</h3>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
+                <div className="card-body">
+                    <table className="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Operation</th>
                                 <th>Amount</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {ctx.history.map(h => {
+                            {ctx.history.map( (h, index) => {
                                 
                                 var hClassName = '';
 
@@ -61,10 +64,11 @@ function AllData(){
                                 }
 
                                 return (
-                                <tr className={hClassName} >
+                                <tr key={"h"+index} className={hClassName} >
                                     <td>{h.name}</td>
                                     <td>{h.operation}</td>
-                                    <td>{h.amount}</td>
+                                    <td className='text-right' >{h.amount}</td>
+                                    <td>{h.date}</td>
                                 </tr>);
                             })}
                         </tbody>

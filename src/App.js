@@ -9,23 +9,22 @@ import CreateAccount from './Account/CreateAccount'
 import Login from './Security/Login';
 import Deposit from './Account/Deposit'
 import WithDraw from './Account/WithDraw'
-import Balance from './Account/Balance'
 import AllData from './Account/AllData'
 import {UserContext} from './Shared/Context';
 
 
 function App() {
 
-  const usersInit = {users : [{name:'Abel', email : 'abel@mit.edu', balance : 3000}], 
+  const usersInit = {users : [{name:'Abel', email : 'abel@mit.edu', balance : 3000, password : '12345678' }], 
                      history : [],
-                     theme : {bgColor:'success', navBarColor: 'dark', textColor : 'white'}
+                     theme : {bgColor:'success', navBarColor: 'dark', textColor : 'white'},
+                     userSession : null
                     };
 
   return (
     <HashRouter>
       <UserContext.Provider value={usersInit}>
       <NavBar />
-      <hr />
       
         <div style = {{paddingLeft: '30px', paddingTop: '20px'}}>
         <Route path='/' exact component={Home} />
@@ -33,7 +32,6 @@ function App() {
         <Route path='/login' component={Login} />
         <Route path='/deposit' component={Deposit} />
         <Route path='/withdraw' component={WithDraw} />
-        <Route path='/balance' component={Balance} />
         <Route path='/alldata' component={AllData} />
         </div>
       </UserContext.Provider>

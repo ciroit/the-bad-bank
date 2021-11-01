@@ -43,9 +43,13 @@ function Deposit(){
         
         var amount = parseFloat(value.amount);
 
-        ctx.users[0].balance += amount;
+        ctx.userSession.balance += amount;
 
-        ctx.history.push({name:ctx.users[0].name, operation : 'Deposit', amount});
+        var date = new Date();
+
+        var formatDate = date.getFullYear() +'-'+ date.getMonth()+'-'+date.getDate()+' '+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+        ctx.history.push({name:ctx.userSession.name, operation : 'Deposit', amount, date: formatDate});
 
         resetForm();
 
@@ -70,7 +74,7 @@ function Deposit(){
                             <Form>
                                 Balance :
                                 <br/>
-                                <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
+                                <input className='form-control' type='text' value={ctx.userSession.balance} disabled />
                                 <br/>
                                 Amount :
                                 <br/>

@@ -23,13 +23,13 @@ function WithDraw(){
         }else{
             var amount = parseFloat(value);
 
-            var balance = ctx.users[0].balance;
+            var balance = ctx.userSession.balance;
 
             if(amount <= 0){
                 error = 'You must enter an amount greater than 0'
             }
             else if(balance < amount){
-                error = 'You must enter a lower number to the balance'
+                error = 'You must enter a number less than or equal to the balance'
             }
         }
 
@@ -48,9 +48,13 @@ function WithDraw(){
         
         var amount = parseFloat(value.amount);
 
-        ctx.users[0].balance -= amount;
+        var date = new Date();
 
-        ctx.history.push({name:ctx.users[0].name, operation : 'Withdraw', amount});
+        var formatDate = date.getFullYear() +'-'+ date.getMonth()+'-'+date.getDate()+' '+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+        ctx.userSession.balance -= amount;
+        
+        ctx.history.push({name:ctx.userSession.name, operation : 'Withdraw', amount, date:formatDate});
 
         resetForm();
         
@@ -75,7 +79,7 @@ function WithDraw(){
                             <Form>
                                 Balance :
                                 <br/>
-                                <input className='form-control' type='text' value={ctx.users[0].balance} disabled />
+                                <input className='form-control' type='text' value={ctx.userSession.balance} disabled />
                                 <br/>
                                 Amount :
                                 <br/>
