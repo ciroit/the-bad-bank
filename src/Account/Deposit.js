@@ -60,7 +60,6 @@ function Deposit(){
     return (
 
         <Card 
-            bgColor = 'primary'
             header = 'Deposit'
             body = {(
                 <>
