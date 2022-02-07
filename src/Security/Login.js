@@ -11,30 +11,39 @@ function Login(){
 
   const handleSubmit = (values)=>{
 
-    var findIndex = ctx.users.findIndex( u => {
+    fetch(`http://localhost:3001/account/login/${values.email}/${values.password}`)
+    .then(response => response.text())
+    .then(text => {
+        try {
+            const result = JSON.parse(text);
 
-      if(u.email == values.email && u.password == values.password){
+            if(result.isSuccess){
 
-        return true;
+              ctx.userSession = result.user;
+        
+              setValue(Date.now);
+        
+              window.location.href = '#';
+        
+            }else{
+              showErrorMessage(result.message);
+            }
 
-      }
-      else return false;
+            console.log('JSON:', result);
+        } catch(err) {
+
+          console.log(text);
+          showErrorMessage('The email and / or password are incorrect.');
+
+        }
+    })
+    .catch(err => {
+
+      console.log(err);
+
+      showErrorMessage('An error ocurred');
 
     });
-
-    if(findIndex>=0){
-
-      ctx.userSession = ctx.users[findIndex];
-
-      setValue(Date.now);
-
-      window.location.href = '#';
-
-    }else{
-      showErrorMessage('The email and / or password are incorrect.');
-    }
-      
-
       
   }
 

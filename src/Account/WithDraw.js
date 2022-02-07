@@ -44,10 +44,50 @@ function WithDraw(){
 
     }
 
+    const showErrorMessage = (message) => {
+
+        var alertPlaceholder = document.getElementById('divMessage')
+
+        alertPlaceholder.innerHTML = '<div class="alert alert-danger alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+    }
+
     const handleSubmit = (value, {resetForm})=>{
         
-        var amount = parseFloat(value.amount);
+        var amount = parseFloat(value.amount) * -1;
 
+        fetch(`http://localhost:3001/account/update/${ctx.userSession.email}/${amount}`)
+        .then(response => response.text())
+        .then(text => {
+            
+                const result = JSON.parse(text);
+
+                if(result.isSuccess){
+
+                    ctx.userSession.balance = result.accountUpdated.balance;
+
+                    resetForm();
+                    
+                    showSuccessMessage(result.message);
+
+                }else{
+
+                    showErrorMessage(result.message);
+
+                } 
+
+                console.log('JSON:', result);
+
+        })
+        .catch(err => {
+
+            console.log(err);
+
+            showErrorMessage('An error ocurred');
+
+        });
+
+        /*
         var date = new Date();
 
         var formatDate = date.getFullYear() +'-'+ date.getMonth()+'-'+date.getDate()+' '+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
@@ -58,7 +98,7 @@ function WithDraw(){
 
         resetForm();
         
-        showSuccessMessage("Success!");
+        showSuccessMessage("Success!");*/
 
     }
 

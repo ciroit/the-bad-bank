@@ -15,7 +15,7 @@ import {UserContext} from './Shared/Context';
 
 function App() {
 
-  const usersInit = {users : [{name:'Abel', email : 'abel@mit.edu', balance : 3000, password : '12345678' }], 
+  const usersInit = {users : [], 
                      history : [],
                      theme : {bgColor:'success', navBarColor: 'dark', textColor : 'white'},
                      userSession : null

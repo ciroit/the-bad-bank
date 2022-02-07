@@ -27,7 +27,25 @@ function CreateAccount(){
 
     function handleSubmit(values){
       ctx.users.push(values);
-      setShow(false);
+
+      const url =  `http://localhost:3001/account/create/${values.name}/${values.email}/${values.password}`;
+
+      (async () => {
+
+        var res = await fetch(url);
+        var data = await res.json();
+
+        console.log("User Created: " + JSON.stringify(data))
+
+        if(data.isSuccess){
+          setShow(false);
+        }else{
+          alert(data.message);
+        }
+
+      })();
+
+      
     }
 
     function clearForm(){
@@ -48,7 +66,6 @@ function CreateAccount(){
                       onSubmit = {handleSubmit}
                       enableReinitialize = {true}
                     >     
-
                       {props => (
 
                           <Form>
