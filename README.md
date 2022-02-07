@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# The Bad Bank
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Versión 1.0.0
 
-## Available Scripts
+![alt text](https://raw.githubusercontent.com/ciroit/the-bad-bank/master/BadBank.gif)
 
-In the project directory, you can run:
+This is an exercise in which I simulate a bank. The reason of this project is learn.
 
-### `npm start`
+### Instalation
+1. Download this repository.
+2. Run "npm install".
+3. Run "npm start"
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Note : This app needs The-Bad-Bank-Api.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Usage
+Create an account, login at the app and you can make a deposit and a withdraw.
 
-### `npm test`
+### Features
+1. Login
+2. Create Account
+3. All Data
+4. Deposit
+5. Withdraw
+6. Select Theme
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Technology used
 
-### `npm run build`
+1. React
+2. React-Bootstrap
+3. React-Dom
+4. React-Router
+5. React-Router-Dom
+8. Formik
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Roadmap
+1. Add authentication and authorization with Google Firebase.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Support and contributions
+Send me an email to hidalgo.ciro@gmail.com
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### License
+The-Bad-Bank is available under the [MIT license](https://opensource.org/licenses/MIT).
