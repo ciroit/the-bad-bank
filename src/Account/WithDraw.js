@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {UserContext, Card} from '../Shared/Context'
 
@@ -6,7 +6,41 @@ import {Formik, Form, Field, ErrorMessage} from 'formik'
 
 function WithDraw(){
 
+    const [accounts, setAccounts] = useState([]);
+    const [variable, setVariable] = useState(null);
+
     const ctx = React.useContext(UserContext);
+
+    useEffect(() => {
+
+        fetch(`http://localhost:3001/account/list/${ctx.userSession._id}`)
+        .then(response => response.text())
+        .then(text => {
+            
+                const result = JSON.parse(text);
+
+                if(result.isSuccess){
+
+                    setAccounts(result.accounts);
+
+                }else{
+
+                    showErrorMessage(result.message);
+
+                } 
+
+                console.log('JSON:', result);
+
+        })
+        .catch(err => {
+
+            console.log(err);
+
+            showErrorMessage('An error ocurred');
+
+        });
+
+    }, [variable]);
 
     function isNumeric(str) {
         if (typeof str != "string") return false // we only process strings!  
@@ -23,17 +57,55 @@ function WithDraw(){
         }else{
             var amount = parseFloat(value);
 
-            var balance = ctx.userSession.balance;
-
-            if(amount <= 0){
+            if(document.getElementById("balance").value == ""){
                 error = 'You must enter an amount greater than 0'
+            }else{
+
+                var balance = parseFloat(document.getElementById("balance").value);
+
+                if(amount <= 0){
+                    error = 'You must enter an amount greater than 0'
+                }
+                else if(balance < amount){
+                    error = 'You must enter a number less than or equal to the balance'
+                }
+
             }
-            else if(balance < amount){
-                error = 'You must enter a number less than or equal to the balance'
-            }
+            
         }
 
         return  error;
+    }
+
+    const validateAccountNumber = (value) => {
+
+        console.log('validateAccountNumber - ' + value);
+
+        var error = ''
+
+        if( value == ''){
+            error = 'You must select a Account Number'
+            document.getElementById("balance").value = "0";
+        } else{
+
+            var accountNumberSelected =  value;
+
+            var accountSelected = accounts.find( a => a.accountNumber == accountNumberSelected);
+
+            if(accountSelected){
+                //setAccountNumber(accountNumberSelected);
+                //setBalance(accountSelected.amount);
+                document.getElementById("balance").value = accountSelected.amount + "";
+            }else{
+                //setAccountNumber('');
+                //setBalance(0);
+                document.getElementById("balance").value = "0";
+            }
+
+        }
+
+        return  error; 
+
     }
 
     const showSuccessMessage = (message) => {
@@ -55,8 +127,9 @@ function WithDraw(){
     const handleSubmit = (value, {resetForm})=>{
         
         var amount = parseFloat(value.amount) * -1;
+        var accountNumber = value.accountNumber;
 
-        fetch(`http://localhost:3001/account/update/${ctx.userSession.email}/${amount}`)
+        fetch(`http://localhost:3001/account/update/${ctx.userSession._id}/${accountNumber}/${amount}`)
         .then(response => response.text())
         .then(text => {
             
@@ -67,6 +140,10 @@ function WithDraw(){
                     ctx.userSession.balance = result.accountUpdated.balance;
 
                     resetForm();
+
+                    setVariable(new Date());
+
+                    document.getElementById("balance").value = "";
                     
                     showSuccessMessage(result.message);
 
@@ -110,16 +187,26 @@ function WithDraw(){
             body = {(
                 <>
                     <Formik
-                        initialValues={{amount:''}}
+                        initialValues={{amount:'', accountNumber:'', balance:0}}
                         onSubmit = {handleSubmit}
                     >
                         
                         {props => (
 
                             <Form>
+                                Account : 
+                                <br/>
+                                <Field className='form-control' name='accountNumber' component='select' validate={validateAccountNumber}>
+                                    <option value='' >-Select-</option>
+                                    {accounts.map((e, key)=> {
+                                        return <option key={key} value={e.accountNumber} >{e.accountNumber}</option>
+                                    })}
+                                </Field>
+                                {props.errors.accountNumber ? <div>{props.errors.accountNumber}</div> : null}
+                                <br/>
                                 Balance :
                                 <br/>
-                                <input className='form-control' type='text' value={ctx.userSession.balance} disabled />
+                                <input className='form-control' type='text' id='balance' name='balance' disabled />
                                 <br/>
                                 Amount :
                                 <br/>

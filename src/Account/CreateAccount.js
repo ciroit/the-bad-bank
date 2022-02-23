@@ -28,7 +28,7 @@ function CreateAccount(){
     function handleSubmit(values){
       ctx.users.push(values);
 
-      const url =  `http://localhost:3001/account/create/${values.name}/${values.email}/${values.password}`;
+      const url =  `http://localhost:3001/user/create/${values.name}/${values.email}/${values.password}`;
 
       (async () => {
 

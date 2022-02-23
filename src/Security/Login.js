@@ -11,7 +11,7 @@ function Login(){
 
   const handleSubmit = (values)=>{
 
-    fetch(`http://localhost:3001/account/login/${values.email}/${values.password}`)
+    fetch(`http://localhost:3001/user/login/${values.email}/${values.password}`)
     .then(response => response.text())
     .then(text => {
         try {
