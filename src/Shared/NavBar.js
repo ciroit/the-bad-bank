@@ -68,6 +68,8 @@ function NavBar(){
     var depositLinkClassName = location.pathname == '/deposit/' ? 'nav-link active' : 'nav-link';
     var withDrawLinkClassName = location.pathname == '/withdraw/' ? 'nav-link active' : 'nav-link';
     var allDataLinkClassName = location.pathname == '/alldata/' ? 'nav-link active' : 'nav-link';
+    var transferLinkClassName = location.pathname == '/transfer/' ? 'nav-link active' : 'nav-link';
+    var historyLinkClassName = location.pathname == '/history/' ? 'nav-link active' : 'nav-link';
 
     return (
         <nav className={`navbar navbar-expand-lg navbar-${ctx.theme.navBarColor} bg-${ctx.theme.bgColor}`} >
@@ -86,6 +88,12 @@ function NavBar(){
                       </li>
                       <li className="nav-item">
                         <a className={withDrawLinkClassName} aria-current="page"  href="#/withdraw/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make a Withdraw!">Withdraw</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={transferLinkClassName} aria-current="page"  href="#/transfer/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make a Transfer!">Transfer</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className={historyLinkClassName} aria-current="page"  href="#/history/" data-bs-toggle="tooltip" data-bs-placement="bottom" title="See all your transactions!">History</a>
                       </li>
                     </>
 

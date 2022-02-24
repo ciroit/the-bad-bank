@@ -10,6 +10,8 @@ import Login from './Security/Login';
 import Deposit from './Account/Deposit'
 import WithDraw from './Account/WithDraw'
 import AllData from './Account/AllData'
+import Transfer from './Account/Transfer'
+import History from './Account/History'
 import {UserContext} from './Shared/Context';
 
 
@@ -33,6 +35,8 @@ function App() {
         <Route path='/deposit' component={Deposit} />
         <Route path='/withdraw' component={WithDraw} />
         <Route path='/alldata' component={AllData} />
+        <Route path='/transfer' component={Transfer} />        
+        <Route path='/history' component={History} />
         </div>
       </UserContext.Provider>
     </HashRouter>
